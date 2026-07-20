@@ -1,0 +1,336 @@
+:root {
+  --paper: #efe6d3;
+  --paper-deep: #e3d7bc;
+  --ink: #211d16;
+  --ink-soft: #4a4335;
+  --pencil: #8a7f68;
+  --stamp: #b3271e;
+  --rule: #c9bda0;
+
+  --type-display: 'Special Elite', 'Courier New', monospace;
+  --type-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--paper-deep);
+}
+
+body {
+  font-family: var(--type-mono);
+  color: var(--ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- paper sheet ---------- */
+
+.sheet {
+  max-width: 680px;
+  margin: 48px auto 64px;
+  padding: 56px 56px 40px;
+  background:
+    radial-gradient(ellipse 120% 80% at 50% -10%, rgba(255, 253, 246, 0.55), transparent 60%),
+    var(--paper);
+  border: 1px solid var(--rule);
+  box-shadow:
+    0 1px 2px rgba(33, 29, 22, 0.12),
+    0 12px 32px -12px rgba(33, 29, 22, 0.28);
+  position: relative;
+}
+
+/* two punched filing holes, top edge */
+.sheet::before,
+.sheet::after {
+  content: '';
+  position: absolute;
+  top: 22px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--paper-deep);
+  box-shadow: inset 0 1px 2px rgba(33, 29, 22, 0.35);
+}
+.sheet::before { left: 25%; }
+.sheet::after { right: 25%; }
+
+/* ---------- file header ---------- */
+
+.file-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 10px;
+  margin-bottom: 8px;
+}
+
+.file-header .warn {
+  color: var(--stamp);
+  font-weight: 500;
+}
+
+.file-sub {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--pencil);
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 10px;
+}
+
+/* ---------- stamp ---------- */
+
+.stamp {
+  position: absolute;
+  top: 84px;
+  right: 34px;
+  font-family: var(--type-display);
+  font-size: 20px;
+  letter-spacing: 0.14em;
+  color: var(--stamp);
+  border: 3px double var(--stamp);
+  padding: 4px 14px;
+  transform: rotate(7deg);
+  opacity: 0.82;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  animation: stamp-in 380ms cubic-bezier(0.2, 1.6, 0.4, 1) 500ms both;
+}
+
+@keyframes stamp-in {
+  from {
+    transform: rotate(14deg) scale(2.4);
+    opacity: 0;
+  }
+  to {
+    transform: rotate(7deg) scale(1);
+    opacity: 0.82;
+  }
+}
+
+/* ---------- headline ---------- */
+
+.headline {
+  font-family: var(--type-display);
+  font-weight: 400;
+  font-size: clamp(30px, 6vw, 44px);
+  line-height: 1.2;
+  margin: 56px 0 8px;
+  letter-spacing: 0.01em;
+}
+
+.subject-line {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--pencil);
+  margin-bottom: 40px;
+}
+
+/* ---------- redaction ---------- */
+
+.redacted {
+  display: inline-block;
+  background: var(--ink);
+  color: var(--ink);
+  padding: 0 6px;
+  border-radius: 1px;
+  cursor: help;
+  transition: background 200ms ease, color 200ms ease;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.redacted:hover,
+.redacted:focus-visible {
+  background: transparent;
+  color: var(--stamp);
+  outline: none;
+  box-shadow: 0 2px 0 var(--stamp);
+}
+
+.redacted.sealed:hover,
+.redacted.sealed:focus-visible {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+/* ---------- brief ---------- */
+
+.brief {
+  font-size: 15.5px;
+  color: var(--ink-soft);
+  max-width: 54ch;
+  margin-bottom: 44px;
+}
+
+.brief p + p {
+  margin-top: 16px;
+}
+
+/* ---------- intel fields ---------- */
+
+.fields {
+  border-top: 1px solid var(--rule);
+  margin-bottom: 48px;
+}
+
+.field {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 20px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: 13.5px;
+}
+
+.field dt {
+  color: var(--pencil);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 11px;
+  padding-top: 2px;
+}
+
+.field dd {
+  color: var(--ink);
+}
+
+/* ---------- clearance form ---------- */
+
+.clearance h2 {
+  font-family: var(--type-display);
+  font-weight: 400;
+  font-size: 22px;
+  margin-bottom: 6px;
+}
+
+.clearance .hint {
+  font-size: 13px;
+  color: var(--pencil);
+  margin-bottom: 18px;
+  max-width: 48ch;
+}
+
+.clearance-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.clearance input[type='email'] {
+  flex: 1 1 240px;
+  font-family: var(--type-mono);
+  font-size: 14px;
+  color: var(--ink);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--ink);
+  padding: 8px 2px;
+  border-radius: 0;
+}
+
+.clearance input[type='email']::placeholder {
+  color: var(--pencil);
+}
+
+.clearance input[type='email']:focus {
+  outline: none;
+  border-bottom-color: var(--stamp);
+}
+
+.clearance button {
+  font-family: var(--type-display);
+  font-size: 15px;
+  letter-spacing: 0.06em;
+  color: var(--paper);
+  background: var(--ink);
+  border: none;
+  padding: 10px 22px;
+  cursor: pointer;
+  transition: transform 120ms ease, background 120ms ease;
+}
+
+.clearance button:hover {
+  background: var(--stamp);
+}
+
+.clearance button:active {
+  transform: translateY(1px);
+}
+
+.clearance button:focus-visible {
+  outline: 2px solid var(--stamp);
+  outline-offset: 2px;
+}
+
+.received {
+  font-family: var(--type-display);
+  font-size: 17px;
+  color: var(--stamp);
+  padding: 10px 0;
+}
+
+/* ---------- footer ---------- */
+
+.foot {
+  margin-top: 56px;
+  padding-top: 14px;
+  border-top: 2px solid var(--ink);
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--pencil);
+}
+
+/* ---------- small screens ---------- */
+
+@media (max-width: 640px) {
+  .sheet {
+    margin: 0;
+    padding: 40px 22px 32px;
+    border-left: none;
+    border-right: none;
+  }
+  .stamp {
+    top: 96px;
+    right: 14px;
+    font-size: 15px;
+  }
+  .field {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+  .file-header,
+  .file-sub,
+  .foot {
+    flex-direction: column;
+    gap: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stamp {
+    animation: none;
+  }
+  .redacted,
+  .clearance button {
+    transition: none;
+  }
+}
